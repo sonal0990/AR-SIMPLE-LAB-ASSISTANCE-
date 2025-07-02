@@ -1,0 +1,52 @@
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Serve static files from specific directories
+app.use('/videos', express.static(path.join(__dirname, 'project/videos')));
+app.use('/images', express.static(path.join(__dirname, 'project/images')));
+app.use('/models', express.static(path.join(__dirname, 'project/models')));
+
+// Routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/intro.html'));
+});
+
+app.get('/welcome', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/welcome.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/dashboard.html'));
+});
+
+app.get('/physics-lab', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/physics-lab.html'));
+});
+
+app.get('/chemistry-lab', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/chemistry-lab.html'));
+});
+
+app.get('/biology-lab', (req, res) => {
+    res.sendFile(path.join(__dirname, 'project/biology-lab.html'));
+});
+
+// Handle 404
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'project/404.html'));
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
