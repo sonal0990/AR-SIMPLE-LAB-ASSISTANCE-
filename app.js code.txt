@@ -1,0 +1,181 @@
+app.js code
+
+// Global variables
+let currentUser = null;
+let currentExperiment = null;
+let arScene = null;
+
+// DOM Elements
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize user session
+    checkUserSession();
+    
+    // Add event listeners for navigation
+    setupEventListeners();
+    
+    // Setup AR components if on experiment page
+    if (document.querySelector('a-scene')) {
+        initializeAR();
+    }
+});
+
+// User Session Management
+function checkUserSession() {
+    const userData = sessionStorage.getItem('userData');
+    if (userData) {
+        currentUser = JSON.parse(userData);
+        updateProfileDisplay();
+    } else if (!window.location.pathname.includes('intro.html')) {
+        window.location.href = '/intro.html';
+    }
+}
+
+function updateProfileDisplay() {
+    const nameElement = document.getElementById('user-name');
+    const classElement = document.getElementById('user-class');
+    
+    if (nameElement && currentUser) {
+        nameElement.textContent = currentUser.name;
+    }
+    if (classElement && currentUser) {
+        classElement.textContent = `Class: ${currentUser.class}`;
+    }
+}
+
+// Event Listeners Setup
+function setupEventListeners() {
+    // Profile form submission
+    const profileForm = document.getElementById('profile-form');
+    if (profileForm) {
+        profileForm.addEventListener('submit', handleProfileSubmit);
+    }
+
+    // Experiment selection
+    const experimentButtons = document.querySelectorAll('.model-btn');
+    experimentButtons.forEach(button => {
+        button.addEventListener('click', handleExperimentSelection);
+    });
+
+    // Navigation buttons
+    setupNavigationListeners();
+}
+
+function handleProfileSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const className = document.getElementById('class').value;
+    
+    currentUser = { name, class: className };
+    sessionStorage.setItem('userData', JSON.stringify(currentUser));
+    
+    window.location.href = '/dashboard';
+}
+
+// AR Functionality
+function initializeAR() {
+    // Request camera access
+    requestCameraPermission();
+    
+    // Initialize AR scene
+    setupARScene();
+}
+
+async function requestCameraPermission() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        // Stop the stream immediately as AR.js will handle the camera
+        stream.getTracks().forEach(track => track.stop());
+    } catch (error) {
+        console.error('Camera permission denied:', error);
+        alert('Camera access is required for AR features');
+    }
+}
+
+function setupARScene() {
+    const scene = document.querySelector('a-scene');
+    if (!scene) return;
+
+    // Add event listeners for marker detection
+    const marker = document.querySelector('a-marker');
+    marker.addEventListener('markerFound', () => {
+        console.log('Marker detected');
+        // Add any marker detection logic here
+    });
+
+    marker.addEventListener('markerLost', () => {
+        console.log('Marker lost');
+        // Add any marker lost logic here
+    });
+}
+
+// Experiment Handling
+function handleExperimentSelection(event) {
+    const modelType = event.target.dataset.model;
+    loadModel(modelType);
+}
+
+function loadModel(modelType) {
+    const modelEntity = document.getElementById('model-container');
+    if (!modelEntity) return;
+
+    // Clear existing model
+    modelEntity.innerHTML = '';
+
+    // Create new model entity
+    const model = document.createElement('a-entity');
+    model.setAttribute('gltf-model', `models/${modelType}.glb`);
+    model.setAttribute('scale', '1 1 1');
+    model.setAttribute('rotation', '0 0 0');
+    
+    modelEntity.appendChild(model);
+    currentExperiment = modelType;
+}
+
+// Navigation Setup
+function setupNavigationListeners() {
+    const backButtons = document.querySelectorAll('.back-btn');
+    backButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            window.location.href = '/dashboard';
+        });
+    });
+
+    const logoutButton = document.getElementById('logout-btn');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
+}
+
+function handleLogout() {
+    sessionStorage.removeItem('userData');
+    window.location.href = '/intro.html';
+}
+
+// Utility Functions
+function showError(message) {
+    const errorElement = document.getElementById('error-message');
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    } else {
+        alert(message);
+    }
+}
+
+// Window resize handler
+window.addEventListener('resize', () => {
+    if (arScene) {
+        // Update AR scene dimensions
+        const camera = document.querySelector('[camera]');
+        if (camera) {
+            camera.setAttribute('aspect', window.innerWidth / window.innerHeight);
+        }
+    }
+});
+
+// Export for use in other modules if needed
+export {
+    loadModel,
+    handleExperimentSelection,
+    showError
+};

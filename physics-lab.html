@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Lab - AR Experiments</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        .model-selector {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .model-btn {
+            padding: 10px 20px;
+            background: #0c92a0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">← Back</button>
+    
+    <div class="model-selector">
+        <button class="model-btn" onclick="loadModel('pendulum')">Pendulum</button>
+        <button class="model-btn" onclick="loadModel('spring')">Spring</button>
+        <button class="model-btn" onclick="loadModel('lever')">Lever</button>
+    </div>
+
+    <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+        <a-marker preset="hiro">
+            <a-entity id="model-container" position="0 0 0" scale="1 1 1">
+                <!-- 3D model will be loaded here -->
+            </a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Request camera permission on page load
+        async function requestCamera() {
+            try {
+                await navigator.mediaDevices.getUserMedia({ video: true });
+                console.log('Camera permission granted');
+            } catch (error) {
+                console.error('Camera permission denied:', error);
+                alert('Camera permission is required for AR experience');
+            }
+        }
+
+        // Load 3D model
+        function loadModel(modelType) {
+            const container = document.getElementById('model-container');
+            container.innerHTML = ''; // Clear existing model
+            
+            // Add new model based on selection
+            const model = document.createElement('a-entity');
+            model.setAttribute('gltf-model', `project/images/${modelType}.glb`);
+            container.appendChild(model);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', requestCamera);
+    </script>
+</body>
+</html>

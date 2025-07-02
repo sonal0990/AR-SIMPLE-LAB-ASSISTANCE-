@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Lab Assistant - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section id="login-screen">
+        <div class="card">
+            <h2>Welcome to AR Lab Assistant</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Enter Username" required>
+                <input type="password" id="password" placeholder="Enter Password" required>
+                <button type="submit">Login</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // JavaScript for Login Validation and Redirection
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Dummy validation: Replace with real authentication logic
+            if (username === "student" && password === "1234") {
+                // Redirect to the dashboard page
+                window.location.href = "dashboard.html";
+            } else {
+                // Show error message
+                document.getElementById("login-error").textContent = "Invalid username or password.";
+            }
+        });
+    </script>
+</body>
+</html>

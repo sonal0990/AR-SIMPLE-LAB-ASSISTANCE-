@@ -1,0 +1,56 @@
+dashboard code html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Lab Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="profile-section">
+            <img src="profile-placeholder.png" alt="Profile" class="profile-pic">
+            <div class="profile-info">
+                <span id="user-name">JHON</span>
+                <span id="user-class">Class: 12-A</span>
+            </div>
+        </div>
+        <button id="logout-btn" onclick="window.location.href='intro.html'">Logout</button>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>Select Your Lab</h1>
+        
+        <div class="subjects-grid">
+            <div class="subject-card" onclick="window.location.href='physics-lab.html'">
+                <img src="https://files.oaiusercontent.com/file-ACmMH5B4s9uEwu6R17f9jM?se=2024-12-28T17%3A12%3A23Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Da1d0742d-3129-4127-9110-fd84f88e19c2.webp&sig=iTGaHUgYccdUx4iKHqyfjBvNRxsWQpUtX61N2sWSNws%3D" alt="Physics">
+                <div class="card-content">
+                    <h2>Physics Lab</h2>
+                    <p>Explore mechanics, waves, and more</p>
+                </div>
+                <div class="card-shadow"></div>
+            </div>
+
+            <div class="subject-card" onclick="window.location.href='chemistry-lab.html'">
+                <img src="https://files.oaiusercontent.com/file-MtWEGvyAcpKeUcSDwxHUbG?se=2024-12-28T17%3A15%3A08Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dc51561af-2bb5-41ca-b9d5-25075b6f1bbf.webp&sig=XXK1UcpH/84NeQ9XXLc91bNfCf899j2NHMDKyzy7avE%3D" alt="Chemistry">
+                <div class="card-content">
+                    <h2>Chemistry Lab</h2>
+                    <p>Conduct virtual chemical experiments</p>
+                </div>
+                <div class="card-shadow"></div>
+            </div>
+
+            <div class="subject-card" onclick="window.location.href='biology-lab.html'">
+                <img src="https://files.oaiusercontent.com/file-B2wvaEDtU2k2oX4vWGdLCa?se=2024-12-28T17%3A14%3A57Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D16e8ead7-f88c-4dd1-a7df-6b8b65f22f20.webp&sig=36SGArDfqpgQ8r7%2BSgVxPcxstOrvejXmGeqck0mJd/I%3D" alt="Biology">
+                <div class="card-content">
+                    <h2>Biology Lab</h2>
+                    <p>Study life sciences in AR</p>
+                </div>
+                <div class="card-shadow"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

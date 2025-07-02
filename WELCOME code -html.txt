@@ -1,0 +1,51 @@
+WELCOME code -html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to AR Lab Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+        .welcome-text {
+            color: #fff;
+            font-size: 3em;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .enter-btn {
+            position: absolute;
+            bottom: 50px;
+            padding: 15px 30px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards 2s;
+        }
+        .enter-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-text">Welcome to AR Lab Assistant</div>
+    <button class="enter-btn" onclick="window.location.href='dashboard.html'">Enter Lab →</button>
+</body>
+</html>

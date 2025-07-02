@@ -1,0 +1,42 @@
+script.js code:
+
+document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username && password) {
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("intro-section").classList.remove("hidden");
+    } else {
+        document.getElementById("login-error").textContent = "Please enter valid credentials.";
+    }
+});
+
+document.getElementById("intro-section").addEventListener("scroll", function () {
+    document.getElementById("intro-section").classList.add("hidden");
+    document.getElementById("subjects-section").classList.remove("hidden");
+});
+
+document.querySelectorAll(".subject-card").forEach(card => {
+    card.addEventListener("click", function () {
+        const experiment = this.id;
+        document.getElementById("subjects-section").classList.add("hidden");
+        document.getElementById("ar-screen").classList.remove("hidden");
+
+        const model = document.getElementById("ar-model");
+        if (experiment === "physics") {
+            model.setAttribute("gltf-model", "path/to/physics-model.glb");
+        } else if (experiment === "chemistry") {
+            model.setAttribute("gltf-model", "path/to/chemistry-model.glb");
+        } else if (experiment === "biology") {
+            model.setAttribute("gltf-model", "path/to/biology-model.glb");
+        }
+    });
+});
+
+document.getElementById("back-to-subjects").addEventListener("click", function () {
+    document.getElementById("ar-screen").classList.add("hidden");
+    document.getElementById("subjects-section").classList.remove("hidden");
+});

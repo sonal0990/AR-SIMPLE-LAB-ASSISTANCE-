@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Lab Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- AR.js and Three.js libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <section id="login-screen">
+        <div class="card">
+            <h2>Welcome to AR Lab Assistant</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Enter Username" required>
+                <input type="password" id="password" placeholder="Enter Password" required>
+                <button type="submit">Login</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="intro-section" class="hidden">
+        <h1 class="intro-title">AR Lab Assistant</h1>
+        <p class="intro-subtitle">Explore Augmented Reality for Virtual Experiments</p>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="subjects-section" class="hidden">
+        <div class="subjects-grid">
+            <div class="subject-card" id="physics">
+                <h3>Physics Lab</h3>
+                <p>Explore physics phenomena in AR</p>
+            </div>
+            <div class="subject-card" id="chemistry">
+                <h3>Chemistry Lab</h3>
+                <p>Discover chemical reactions in AR</p>
+            </div>
+            <div class="subject-card" id="biology">
+                <h3>Biology Lab</h3>
+                <p>Examine biological structures in AR</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AR Experiment Screen -->
+    <section id="ar-screen" class="hidden">
+        <a-scene embedded arjs="trackingMethod: best;">
+            <a-marker preset="hiro">
+                <a-entity id="ar-model" position="0 0 0" scale="1 1 1"></a-entity>
+            </a-marker>
+            <a-entity camera></a-entity>
+        </a-scene>
+        <button id="back-to-subjects" class="floating-button">Back to Subjects</button>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
